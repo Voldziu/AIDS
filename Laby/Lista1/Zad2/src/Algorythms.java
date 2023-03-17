@@ -87,6 +87,38 @@ public class Algorythms {
 
         }
 
+    public static int bitap_search(String text, String pattern)
+    {
+        int m = pattern.length();
+        long pattern_mask[] = new long[Character.MAX_VALUE + 1];
+
+        /** Initialize the bit array R **/
+        long R = ~1;
+        if (m == 0)
+            return -1;
+        if (m > 63)
+        {
+            System.out.println("Pattern is too long!");
+            return -1;
+        }
+        /** Initialize the pattern bitmasks **/
+        for (int i = 0; i <= Character.MAX_VALUE; ++i)
+            pattern_mask[i] = ~0;
+        for (int i = 0; i < m; ++i)
+            pattern_mask[pattern.charAt(i)] &= ~(1L << i);
+        for (int i = 0; i < text.length(); ++i)
+        {
+            /** Update the bit array **/
+            R |= pattern_mask[text.charAt(i)];
+            R <<= 1;
+            if ((R & (1L << m)) == 0)
+                return  i - m + 1;
+
+        }
+        return -1;
+
+    }
+
 
 }
 

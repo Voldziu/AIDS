@@ -9,6 +9,7 @@ public class Main {
 //
 //
 //        }
+        System.out.println(Algorythms.bitap_search("upaupaupa","upa=da"));
 
     }
 }
