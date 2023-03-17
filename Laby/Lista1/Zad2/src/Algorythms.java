@@ -12,7 +12,6 @@ public class Algorythms {
                 res= res+swap(words[i])+" ";
 
 
-
             } else {
                 res = res +words[i]+" ";
             }
