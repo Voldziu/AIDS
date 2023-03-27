@@ -2,19 +2,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Algorythms {
-    public static void pairSwap(String text) {
+    public static void PairSwap(String text,String pattern) {
         System.out.println(text);
         String[] words = text.split(" ");
         String res="";
+        int patternstartindex;
         for (int i = 0; i < words.length; i++) {
-
-            if (words[i].contains("=")&&ifswap(words[i])) {
-                res= res+swap(words[i])+" ";
+            patternstartindex=kmp(words[i],pattern);
 
 
-            } else {
-                res = res +words[i]+" ";
+            if(!(patternstartindex==-1)){
+                res= res+ swap(words[i],pattern);
+
+            }else{
+                res+=words[i];
             }
+
+
+
+
 
 
         }
@@ -22,29 +28,136 @@ public class Algorythms {
 
 
     }
+    public static int findEquals(String word){
+        int n = word.length();
 
-    public static String swap(String text) {
-        String[] tuple = text.split("=");
+        int i=0;
+        while(i<n){
+            if(word.charAt(i)=='='){
 
-        Character suffix;
+                return i;
+
+            } else{
+                i++;
+            }
+        }
+
+        return -1;
+    }
+
+    public static String swap(String word,String pattern) {
+        int wordindex=findEquals(word);
+        int patternlength= pattern.length();
+        int patternindex= findEquals(pattern);
+        String res="";
+        char ISign=' ';
+
+
         ArrayList<Character> InterpunctionSigns = new ArrayList<Character>(Arrays.asList(',', ';', '.', '!', '?',':'));
-        if(InterpunctionSigns.contains(tuple[1].charAt(tuple[1].length()-1))){
-            suffix=tuple[1].charAt(tuple[1].length()-1);
-            tuple[1]=tuple[1].substring(0,tuple[1].length()-1);
-            return tuple[1] + "=" + tuple[0]+ suffix;
-
-
-
-
-        }else {
-            return tuple[1] + "=" + tuple[0];
+        if(InterpunctionSigns.contains(word.charAt(word.length()-1))){
+            ISign=word.charAt(word.length()-1);
+            word=word.substring(0,word.length()-1);
         }
 
 
 
+        char[] chars = word.toCharArray();
+        for (int i = wordindex+1; i <chars.length; i++) {
+            res+=chars[i];
+
+        }
+        res+="=";
+        for (int i = 0; i <wordindex ; i++) {
+            res+=chars[i];
+
+        }
+        if(ISign!=' '){
+            return res+ISign+" ";
+        }else{
+            return res+" ";
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+    public static int kmp(String text, String pattern){
+        int[] preffixsuffixtab = makeminipatterns(pattern);
+
+        int i=0,j=0;
+        while(i<text.length()){
+
+            if(text.charAt(i)!=pattern.charAt(j)){
+                if(j==0){
+                    i++;
+                } else {
+                    j=preffixsuffixtab[j-1];
+
+                }
+
+            } else{
+                i++;
+                j++;
+            }
+            if(j==pattern.length()){
+
+                return i-pattern.length();
+            }
+
+
+        }
+
+        return -1;
+
+
     }
 
+    public static int[] makeminipatterns(String pattern){
+        int[] res = new int[pattern.length()];
+        int j=0;
+        int i=1;
+        while(i<pattern.length()){
+            if(pattern.charAt(i)!=pattern.charAt(j)){
+                if(j==0){
+                    i++;
+                } else {
+                        j=res[j-1];
 
+
+                }
+
+
+            } else {
+                res[i]=j+1;
+                i++;
+                j++;
+            }
+
+        }
+
+
+
+
+
+        return res;
+    }
     public static boolean ifswap(String text) {
         ArrayList<Character> InterpunctionSigns = new ArrayList<Character>(Arrays.asList(',', ';', '.', '!', '?',':'));
         String[] tuple = text.split("=");
@@ -86,37 +199,6 @@ public class Algorythms {
 
         }
 
-    public static int bitap_search(String text, String pattern)
-    {
-        int m = pattern.length();
-        long pattern_mask[] = new long[Character.MAX_VALUE + 1];
-
-        /** Initialize the bit array R **/
-        long R = ~1;
-        if (m == 0)
-            return -1;
-        if (m > 63)
-        {
-            System.out.println("Pattern is too long!");
-            return -1;
-        }
-        /** Initialize the pattern bitmasks **/
-        for (int i = 0; i <= Character.MAX_VALUE; ++i)
-            pattern_mask[i] = ~0;
-        for (int i = 0; i < m; ++i)
-            pattern_mask[pattern.charAt(i)] &= ~(1L << i);
-        for (int i = 0; i < text.length(); ++i)
-        {
-            /** Update the bit array **/
-            R |= pattern_mask[text.charAt(i)];
-            R <<= 1;
-            if ((R & (1L << m)) == 0)
-                return  i - m + 1;
-
-        }
-        return -1;
-
-    }
 
 
 }
