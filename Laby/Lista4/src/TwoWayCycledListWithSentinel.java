@@ -1,7 +1,10 @@
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.ListIterator;
 
 public class TwoWayCycledListWithSentinel<E> implements IList<E> {
+    private String key;
     private class Element{
         private E value;
         private Element next;
@@ -76,6 +79,27 @@ public class TwoWayCycledListWithSentinel<E> implements IList<E> {
             return null;
         return elem;
     }
+     public Element getElementKey(String key,String keyvalue){
+        this.key=key;
+        Element elem = sentinel.getNext();
+        while(elem!=sentinel && !executeMethod(elem.getValue()).equals(keyvalue)){
+            elem=elem.getNext();
+
+        }
+        return elem;
+
+
+    }
+    public E getValueKey(String key, String keyvalue){
+        this.key=key;
+        Element elem = sentinel.getNext();
+        while(elem!=null && !executeMethod(elem.getValue()).equals(keyvalue)){
+            elem=elem.getNext();
+
+        }
+        return elem.getValue();
+    }
+
 
     @Override
     public boolean isEmpty() {
@@ -97,6 +121,9 @@ public class TwoWayCycledListWithSentinel<E> implements IList<E> {
     public E get(int index) {
         Element elem=getElement(index);
         return (E) elem.getValue();
+    }
+    public E getValue(Element elem){
+        return elem.getValue();
     }
 
     @Override
@@ -127,12 +154,21 @@ public class TwoWayCycledListWithSentinel<E> implements IList<E> {
     }
 
     @Override
-    public boolean addBefore(E key, E element) {
-        return false;
+    public boolean addBefore(String key, String keyvalue,E value) {
+        Element keyelem = getElementKey(key,keyvalue);
+        Element newElem = new Element(value);
+        keyelem.insertBefore(newElem);
+
+
+        return true;
     }
 
     @Override
-    public boolean addAfter(E key, E element) {
+    public boolean addAfter(String key, String keyvalue,E value) {
+        Element keyelem = getElementKey(key,keyvalue);
+        Element newElem = new Element(value);
+        keyelem.insertAfter(newElem);
+
         return false;
     }
 
@@ -168,6 +204,14 @@ public class TwoWayCycledListWithSentinel<E> implements IList<E> {
         elem.remove();
         return true;
     }
+    public boolean removeKey(String key, String keyvalue){
+        Element delElem = getElementKey(key,keyvalue);
+        delElem.remove();
+        return true;
+
+
+    }
+
 
     @Override
     public int size() {
@@ -189,6 +233,22 @@ public class TwoWayCycledListWithSentinel<E> implements IList<E> {
         }
 
     }
+    public String executeMethod(E value){
+        try {
+            Method method = value.getClass().getMethod(metodazkija());
+            return method.invoke(value).toString();
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e ){
+            throw new RuntimeException(e);
+
+        }
+
+
+    }
+
+    public String metodazkija(){
+        return "get"+key.substring(0,1).toUpperCase()+key.substring(1);
+    }
+
 
 
     @Override
@@ -297,5 +357,36 @@ public class TwoWayCycledListWithSentinel<E> implements IList<E> {
                 wasNext=false;
             }
         }
+    }
+    public void SortByKey(String key){
+        this.key=key;
+        if(sentinel.getNext().getNext()==sentinel){
+            return;
+        }
+        boolean stillswapping = true;
+        while(stillswapping){
+
+            stillswapping=false;
+            Element current = sentinel.getNext();
+            while(current.getNext()!=sentinel){
+                if(executeMethod(current.getValue()).compareTo(executeMethod(current.getNext().getValue()))>0){
+                    swap(current,current.getNext());
+                    stillswapping=true;
+                }
+                current=current.getNext();
+            }
+        }
+
+
+
+    }
+    public void swap(Element e1, Element e2){
+        E temp = e1.getValue();
+
+        e1.setValue(e2.getValue());
+        e2.setValue(temp);
+
+
+
     }
 }
