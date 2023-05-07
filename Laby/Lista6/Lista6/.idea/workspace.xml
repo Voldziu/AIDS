@@ -5,24 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="98b7a208-14d3-4d24-9c1e-953306963be2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../../Lista5/src/InsertionSortLinear.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/IList.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/IList.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/OneWayListWithSentinel$Element.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/OneWayListWithSentinel$Element.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/OneWayListWithSentinel$OWLiterator.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/OneWayListWithSentinel$OWLiterator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/OneWayListWithSentinel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/OneWayListWithSentinel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/TwoWayCycledListWithSentinel$Element.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/TwoWayCycledListWithSentinel$Element.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/TwoWayCycledListWithSentinel$TWCIterator.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/TwoWayCycledListWithSentinel$TWCIterator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/TwoWayCycledListWithSentinel$TWCListIterator.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/TwoWayCycledListWithSentinel$TWCListIterator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/TwoWayCycledListWithSentinel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/TwoWayCycledListWithSentinel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/TwoWayListWithSentinel$Element.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/TwoWayListWithSentinel$Element.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/TwoWayListWithSentinel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/out/production/Lista4/TwoWayListWithSentinel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/src/IList.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/src/IList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/src/OneWayCycledListWithSentinel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/src/OneWayCycledListWithSentinel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/src/OneWayListWithSentinel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/src/OneWayListWithSentinel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/src/TwoWayCycledListWithSentinel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/src/TwoWayCycledListWithSentinel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Lista4/src/TwoWayListWithSentinel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lista4/src/TwoWayListWithSentinel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/IStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Stack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Stack.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,8 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -53,6 +39,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Mikołaj/IdeaProjects/AISD/Laby/Lista6/Lista6",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -74,5 +61,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

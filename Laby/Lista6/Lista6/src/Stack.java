@@ -17,12 +17,12 @@ public class Stack<T> implements IStack<T> {
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean empty() {
         return topIndex==0;
     }
 
     @Override
-    public boolean isFull() {
+    public boolean full() {
         return topIndex==array.length;
     }
 
