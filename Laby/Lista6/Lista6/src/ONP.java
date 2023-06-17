@@ -40,11 +40,11 @@ public class ONP {
     public static String getUntilBracket(){
         String result = "";
         String c = null;
-        if (!stack.empty()) {
+        if (!stack.isEmpty()) {
             c = (String) stack.pop();
             while (!c.equals("(")){
                 result = result + " " + c;
-                if (stack.empty()) break;
+                if (stack.isEmpty()) break;
                 c = (String) stack.pop();
             }
         }
@@ -57,12 +57,12 @@ public class ONP {
     public static String getFromStack(String operator){
         String result = "";
         String c = null;
-        if (!stack.empty()) {
+        if (!stack.isEmpty()) {
             c = (String) stack.pop();
             while (((operator.equals("+") || operator.equals("-")) && !c.equals("(")) ||
                     ((operator.equals("/") || operator.equals("*")) && (c.equals("/") || c.equals("*")))){
                 result += " " + c;
-                if (stack.empty()) break;
+                if (stack.isEmpty()) break;
                 c = (String) stack.pop();
             }
             stack.push(c);
@@ -77,7 +77,7 @@ public class ONP {
     public static String getAll(){
         String result = "";
         String c = null;
-        while (!stack.empty()){
+        while (!stack.isEmpty()){
             c = (String) stack.pop();
             result += " " + c;
         }

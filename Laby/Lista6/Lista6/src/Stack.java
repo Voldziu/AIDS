@@ -1,6 +1,6 @@
 public class Stack<T> implements IStack<T> {
 
-    private static final int DEFAULT_CAPACITY = 16;
+    private static final int DEFAULT_CAPACITY = 32;
     T array[];
     int topIndex;
 
@@ -17,12 +17,12 @@ public class Stack<T> implements IStack<T> {
     }
 
     @Override
-    public boolean empty() {
+    public boolean isEmpty() {
         return topIndex==0;
     }
 
     @Override
-    public boolean full() {
+    public boolean isFull() {
         return topIndex==array.length;
     }
 

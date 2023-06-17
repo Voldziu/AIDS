@@ -28,11 +28,11 @@ public class Mejn {
 
         Comparator<MarkedValue<Integer>> markedComparator = new MarkedValueComparator<Integer>(comparator);
         Generator<MarkedValue<Integer>> generatorOrdered = new OrderedMarkedIntegerArrayGenerator();
-        Generator<MarkedValue<Integer>> generatorRandom = new RandomMarkedIntegerArrayGenerator(10);
+        Generator<MarkedValue<Integer>> generatorRandom = new RandomMarkedIntegerArrayGenerator(1000);
         Generator<MarkedValue<Integer>> generatorReversed = new ReversedMarkedIntegerArrayGenerator();
         Generator<MarkedValue<Integer>> generatorShuffle = new ShuffledMarkedIntegerArrayGenerator();
 
-        Generator<MarkedValue<Integer>> generatorRandomLinked = new RandomMarkedIntegerLinkedGenerator(10);
+        Generator<MarkedValue<Integer>> generatorRandomLinked = new RandomMarkedIntegerLinkedGenerator(1000);
 
 
 
@@ -48,8 +48,8 @@ public class Mejn {
         out.write("N;time;timestd;Comparitions;Std Comparitions;Swaps;Stf Swaps;Sorted;Stable;"+"\n");
         for (int liczba: listaN
              ) {
-            Result result = Tester.runNTimes(InsertionSortLinear,generatorRandom,liczba, 20);
-            System.out.println(result);
+            Result result = Tester.runNTimes(SelectSort,generatorRandom,liczba, 20);
+            System.out.println(liczba+ " "+result);
             out.write(liczba+";"+result+"\n");
 
         }
