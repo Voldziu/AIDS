@@ -1,80 +1,88 @@
-import java.util.*;
-
 public class ONPConverter {
 
-    public static String convertToONP(String input) {
+    public static String convertToONP(String expression) {
+        String[] tokens = expression.split(" ");
         Stack<String> operatorStack = new Stack<String>();
-        ArrayList<String> outputList = new ArrayList<String>();
-        String[] tokens = input.split(" ");
-
+        StringBuilder output = new StringBuilder();
         for (String token : tokens) {
-            if (isNumber(token)) {
-                outputList.add(token);
-            } else if (isOperator(token)) {
-                while (!operatorStack.isEmpty() && shouldPop(operatorStack.peek(), token)) {
-                    outputList.add(operatorStack.pop());
-                }
-                operatorStack.push(token);
+            if (token.matches("\\d+")) {
+                output.append(token).append(" ");
             } else if (token.equals("(")) {
                 operatorStack.push(token);
             } else if (token.equals(")")) {
-                while (!operatorStack.peek().equals("(")) {
-                    outputList.add(operatorStack.pop());
+                while (!operatorStack.isEmpty() && !operatorStack.peek().equals("(")) {
+                    output.append(operatorStack.pop()).append(" ");
                 }
                 operatorStack.pop();
+            } else {
+                while (!operatorStack.isEmpty() && hasHigherOrEqualPrecedence(token, operatorStack.peek())) {
+                    output.append(operatorStack.pop()).append(" ");
+                }
+                operatorStack.push(token);
             }
         }
-
         while (!operatorStack.isEmpty()) {
-            outputList.add(operatorStack.pop());
+            output.append(operatorStack.pop()).append(" ");
         }
-
-        String result="";
-        for (int i = 0; i <outputList.size() ; i++) {
-            result+=outputList.get(i)+" ";
-
-
-        }
-
-        return result;
+        return output.toString();
     }
 
-    public static boolean isNumber(String token) {
-        try {
-            Double.parseDouble(token);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
+    private static boolean hasHigherOrEqualPrecedence(String operator1, String operator2) {
+        return getOperatorPrecedence(operator1) <= getOperatorPrecedence(operator2);
+    }
+
+    private static int getOperatorPrecedence(String operator) {
+        switch (operator) {
+            case "+":
+            case "-":
+
+            case "<=>":
+                return 1;
+            case "*":
+            case "/":
+
+            case "=>":
+                return 2;
+            case "∨":
+
+                return 3;
+            case "∧":
+                return 4;
+
+            case "!":
+                return 5;
+
+            default:
+                return -1;
         }
     }
 
-    public static boolean isOperator(String token) {
-        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/") || token.equals("^");
-    }
 
-    public static int precedence(String operator) {
-        if (operator.equals("+") || operator.equals("-")) {
-            return 1;
-        } else if (operator.equals("*") || operator.equals("/")) {
-            return 2;
-        } else {
-            return 0;
+    public static String logicToONP(String expression) {
+        String[] tokens = expression.split(" ");
+        Stack<String> operatorStack = new Stack<String>();
+        StringBuilder output = new StringBuilder();
+        for (String token : tokens) {
+            if (token.matches( "[A-Za-z]+")) {
+                output.append(token).append(" ");
+            } else if (token.equals("(")) {
+                operatorStack.push(token);
+            } else if (token.equals(")")) {
+                while (!operatorStack.isEmpty() && !operatorStack.peek().equals("(")) {
+                    output.append(operatorStack.pop()).append(" ");
+                }
+                operatorStack.pop();
+            } else {
+                while (!operatorStack.isEmpty() && hasHigherOrEqualPrecedence(token, operatorStack.peek())) {
+                    output.append(operatorStack.pop()).append(" ");
+                }
+                operatorStack.push(token);
+            }
         }
-    }
-
-    public static boolean shouldPop(String topOperator, String newOperator) {
-        if (topOperator.equals("(")) {
-            return false;
+        while (!operatorStack.isEmpty()) {
+            output.append(operatorStack.pop()).append(" ");
         }
-        int topPrecedence = precedence(topOperator);
-        int newPrecedence = precedence(newOperator);
-        if (topPrecedence > newPrecedence) {
-            return true;
-        } else if (topPrecedence == newPrecedence && (topOperator.equals("^") || newOperator.equals("^"))) {
-            return false;
-        } else {
-            return false;
-        }
+        return output.toString();
     }
 }
 
