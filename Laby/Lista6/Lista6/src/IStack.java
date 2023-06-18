@@ -1,6 +1,6 @@
 public interface IStack<T>{
-    boolean empty();
-    boolean full();
+    boolean isEmpty();
+    boolean isFull();
     T pop() ;
     void push(T elem) ;
     int size();  // zwraca liczb� element�w na stosie

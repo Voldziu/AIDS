@@ -1,52 +1,90 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class ONPCalculator {
+    public static double calculate_ONP(String ONP) {
 
-    public static double calculate(String expression) {
-        Stack<Double> stack = new Stack<>();
-
-        String[] tokens = expression.split(" ");
-
-
-
+        ListStack<Double> stack = new ListStack<Double>();
+        String[] tokens = ONP.split(" ");
         for (String token : tokens) {
             System.out.println(token);
-            if (isNumeric(token)) {
+            if (token.matches("\\d+")) {
                 stack.push(Double.parseDouble(token));
             } else {
-                double operand2 = stack.pop();
-                double operand1 = stack.pop();
-                double result = 0;
-
-                switch(token) {
-                    case "+":
-                        result = operand1 + operand2;
-                        break;
-                    case "-":
-                        result = operand1 - operand2;
-                        break;
-                    case "*":
-                        result = operand1 * operand2;
-                        break;
-                    case "/":
-                        result = operand1 / operand2;
-                        break;
+                double b  = stack.pop();
+                double a = stack.pop();
+                if (token.equals("+")) {
+                    stack.push(a + b);
+                } else if (token.equals("-")) {
+                    stack.push(a - b);
+                } else if (token.equals("*")) {
+                    stack.push(a * b);
+                } else if (token.equals("/")) {
+                    stack.push(a / b);
                 }
-
-                stack.push(result);
             }
         }
-
         return stack.pop();
     }
 
-    private static boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
+    public static int calculate_logic_ONP(String ONP, HashMap<String, Integer> values) {
+
+        ListStack<Integer> stack = new ListStack<Integer>();
+        String[] tokens = ONP.split(" ");
+        for (String token : tokens) {
+            System.out.println(token);
+            if ( token.equals("∧") ) {
+                int b = stack.pop();
+                int a = stack.pop();
+                if(a==1 && b==1){
+                    stack.push(1);
+                }else {
+                    stack.push(0);
+                }
+
+            } else if ( token.equals("v")) {
+                int b = stack.pop();
+                int a = stack.pop();
+                if(a==0&b==0){
+                    stack.push(0);
+                } else{
+                    stack.push(1);
+                }
+
+            } else if (token.equals("!")) {
+               int a = stack.pop();
+                if(a==1){
+                    stack.push(0);
+                }else{
+                    stack.push(1);
+                }
+            }
+            else if (token.equals("<=>")) {
+                int b = stack.pop();
+                int a = stack.pop();
+                if(a==b){
+                    stack.push(1);
+                } else{
+                    stack.push(0);
+                }
+
+            }
+            else if (token.equals("=>")) {
+                int b = stack.pop();
+                int a = stack.pop();
+
+                if(a==1 && b==0){
+                    stack.push(0);
+                } else{
+                    stack.push(1);
+                }
+
+
+            }
+            else {
+                stack.push(values.get(token));
+            }
         }
-        try {
-            double d = Double.parseDouble(strNum);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
+        return stack.pop();
     }
 }
