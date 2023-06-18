@@ -1,0 +1,235 @@
+Index: src/Stack.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>public class Stack<T> implements IStack<T> {\r\n\r\n    private static final int DEFAULT_CAPACITY = 16;\r\n    T array[];\r\n    int topIndex;\r\n\r\n    // klasy generyczne w zasadzie s� typu Object\r\n    // pozwalaj� jednak ju� na etapie kompilacji sprawdza� poprawno�� typ�w\r\n    @SuppressWarnings(\"unchecked\")\r\n    public Stack (int initialSize){\r\n        array=(T[])(new Object[initialSize]);\r\n        topIndex=0;\r\n    }\r\n\r\n    public Stack (){\r\n        this(DEFAULT_CAPACITY);\r\n    }\r\n\r\n    @Override\r\n    public boolean empty() {\r\n        return topIndex==0;\r\n    }\r\n\r\n    @Override\r\n    public boolean full() {\r\n        return topIndex==array.length;\r\n    }\r\n\r\n    @Override\r\n    public T pop()  {\r\n\r\n        return array[--topIndex];\r\n    }\r\n\r\n    @Override\r\n    public void push(T elem)  {\r\n\r\n        array[topIndex++]=elem;\r\n\r\n    }\r\n\r\n    @Override\r\n    public int size() {\r\n        return topIndex;\r\n    }\r\n\r\n    @Override\r\n    public T peek()  {\r\n\r\n        return array[topIndex-1];\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Stack.java b/src/Stack.java
+--- a/src/Stack.java	(revision 6dcd669a0f10fd06dac9ce4859b7d69c880c95e7)
++++ b/src/Stack.java	(date 1683242636000)
+@@ -1,53 +1,32 @@
+-public class Stack<T> implements IStack<T> {
++import java.util.ArrayList;
++import java.util.EmptyStackException;
+ 
+-    private static final int DEFAULT_CAPACITY = 16;
+-    T array[];
+-    int topIndex;
+-
+-    // klasy generyczne w zasadzie s� typu Object
+-    // pozwalaj� jednak ju� na etapie kompilacji sprawdza� poprawno�� typ�w
+-    @SuppressWarnings("unchecked")
+-    public Stack (int initialSize){
+-        array=(T[])(new Object[initialSize]);
+-        topIndex=0;
+-    }
++public class Stack<T> {
++    private ArrayList<T> items;
+ 
+-    public Stack (){
+-        this(DEFAULT_CAPACITY);
+-    }
+-
+-    @Override
+-    public boolean empty() {
+-        return topIndex==0;
++    public Stack() {
++        items = new ArrayList<T>();
+     }
+ 
+-    @Override
+-    public boolean full() {
+-        return topIndex==array.length;
++    public void push(T item) {
++        items.add(item);
+     }
+ 
+-    @Override
+-    public T pop()  {
+-
+-        return array[--topIndex];
+-    }
+-
+-    @Override
+-    public void push(T elem)  {
+-
+-        array[topIndex++]=elem;
+-
++    public T pop() {
++        if (items.isEmpty()) {
++            throw new EmptyStackException();
++        }
++        return items.remove(items.size() - 1);
+     }
+-
+-    @Override
+-    public int size() {
+-        return topIndex;
+-    }
+ 
+-    @Override
+-    public T peek()  {
+-
+-        return array[topIndex-1];
++    public T peek() {
++        if (items.isEmpty()) {
++            throw new EmptyStackException();
++        }
++        return items.get(items.size() - 1);
+     }
+ 
+-}
++    public boolean isEmpty() {
++        return items.isEmpty();
++    }
++}
+\ No newline at end of file
+Index: src/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>public class Main {\r\n    public static void main(String[] args) {\r\n        ONP.Convert(\"5*((3 - 7)*2 - 3*(5 + 1)) - 3\");\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Main.java b/src/Main.java
+--- a/src/Main.java	(revision 6dcd669a0f10fd06dac9ce4859b7d69c880c95e7)
++++ b/src/Main.java	(date 1683421042000)
+@@ -1,5 +1,22 @@
++import java.util.HashMap;
++import java.util.Map;
++
+ public class Main {
+     public static void main(String[] args) {
+-        ONP.Convert("5*((3 - 7)*2 - 3*(5 + 1)) - 3");
++
++        String expression = "5 * ( ( 3 - 7 ) * 2 - 3 * ( 5 + 1 ) ) - 3";
++        int result = Calculator.calculate_ONP(expression);
++        System.out.println(result); // -133
++
++
++        String logic_expression = "p & q | ( r => s )";
++        Map<String, Boolean> values = new HashMap<String, Boolean>();
++        values.put("p", false);
++        values.put("q", true);
++        values.put("r", false);
++        values.put("s", true);
++        boolean logic_result = Calculator.calculate_logic_ONP(logic_expression, values);
++        System.out.println(logic_result); // true
+     }
+-}
+\ No newline at end of file
++}
++
+Index: src/ONP.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>public class ONP {\r\n    private static Stack stack = new Stack();\r\n    public static void Convert(String statement){\r\n        String result =\"\";\r\n        boolean sign = true;\r\n\r\n        statement = statement.replace(\" \",\"\");\r\n\r\n        for (int i = 0; i <statement.length() ; i++) {\r\n            if(statement.charAt(i)=='('){\r\n                stack.push(\"(\");\r\n                sign=true;\r\n                result+=\" \";\r\n                \r\n            } else if (statement.charAt(i)==')') {\r\n                result+= \" \"+getUntilBracket();\r\n                sign =false;\r\n                \r\n            } else if ((statement.charAt(i) == '+' ||\r\n                    statement.charAt(i) == '-' ||\r\n                    statement.charAt(i) == '*' ||\r\n                    statement.charAt(i) == '/') && !sign) {\r\n                result+=\" \" + getFromStack(statement.substring(i,i+1));\r\n                sign=true;\r\n                \r\n            }else{\r\n                if(sign && statement.charAt(i)=='-'){\r\n                    result+=\" \";\r\n                }\r\n                result+=statement.charAt(i);\r\n                sign=false;\r\n            }\r\n\r\n        }\r\n        result+=getAll();\r\n        result=result.replace(\" \",\"\");\r\n        System.out.println(\"ONP: \"+result);\r\n\r\n    }\r\n    public static String getUntilBracket(){\r\n        String result = \"\";\r\n        String c = null;\r\n        if (!stack.empty()) {\r\n            c = (String) stack.pop();\r\n            while (!c.equals(\"(\")){\r\n                result = result + \" \" + c;\r\n                if (stack.empty()) break;\r\n                c = (String) stack.pop();\r\n            }\r\n        }\r\n        if (result.length() > 0) {\r\n            result = \" \" + result;\r\n        }\r\n        return result;\r\n\r\n    }\r\n    public static String getFromStack(String operator){\r\n        String result = \"\";\r\n        String c = null;\r\n        if (!stack.empty()) {\r\n            c = (String) stack.pop();\r\n            while (((operator.equals(\"+\") || operator.equals(\"-\")) && !c.equals(\"(\")) ||\r\n                    ((operator.equals(\"/\") || operator.equals(\"*\")) && (c.equals(\"/\") || c.equals(\"*\")))){\r\n                result += \" \" + c;\r\n                if (stack.empty()) break;\r\n                c = (String) stack.pop();\r\n            }\r\n            stack.push(c);\r\n        }\r\n        stack.push(operator);\r\n\r\n        return result;\r\n\r\n\r\n    }\r\n\r\n    public static String getAll(){\r\n        String result = \"\";\r\n        String c = null;\r\n        while (!stack.empty()){\r\n            c = (String) stack.pop();\r\n            result += \" \" + c;\r\n        }\r\n        return result;\r\n\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/ONP.java b/src/ONP.java
+--- a/src/ONP.java	(revision 6dcd669a0f10fd06dac9ce4859b7d69c880c95e7)
++++ b/src/ONP.java	(date 1683488597013)
+@@ -40,11 +40,11 @@
+     public static String getUntilBracket(){
+         String result = "";
+         String c = null;
+-        if (!stack.empty()) {
++        if (!stack.isEmpty()) {
+             c = (String) stack.pop();
+             while (!c.equals("(")){
+                 result = result + " " + c;
+-                if (stack.empty()) break;
++                if (stack.isEmpty()) break;
+                 c = (String) stack.pop();
+             }
+         }
+@@ -57,12 +57,12 @@
+     public static String getFromStack(String operator){
+         String result = "";
+         String c = null;
+-        if (!stack.empty()) {
++        if (!stack.isEmpty()) {
+             c = (String) stack.pop();
+             while (((operator.equals("+") || operator.equals("-")) && !c.equals("(")) ||
+                     ((operator.equals("/") || operator.equals("*")) && (c.equals("/") || c.equals("*")))){
+                 result += " " + c;
+-                if (stack.empty()) break;
++                if (stack.isEmpty()) break;
+                 c = (String) stack.pop();
+             }
+             stack.push(c);
+@@ -77,7 +77,7 @@
+     public static String getAll(){
+         String result = "";
+         String c = null;
+-        while (!stack.empty()){
++        while (!stack.isEmpty()){
+             c = (String) stack.pop();
+             result += " " + c;
+         }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"98b7a208-14d3-4d24-9c1e-953306963be2\" name=\"Changes\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/IStack.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/IStack.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Main.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/Stack.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Stack.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Interface\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$/../../..\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2PSavbvDs2rvGT5dFaezresi1kO\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"last_opened_file_path\": \"C:/Users/Mikołaj/IdeaProjects/AISD/Laby/Lista6/Lista6\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"98b7a208-14d3-4d24-9c1e-953306963be2\" name=\"Changes\" comment=\"\" />\r\n      <created>1683453169070</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1683453169070</updated>\r\n      <workItem from=\"1683453170288\" duration=\"1002000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 6dcd669a0f10fd06dac9ce4859b7d69c880c95e7)
++++ b/.idea/workspace.xml	(date 1683489110873)
+@@ -4,10 +4,10 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="98b7a208-14d3-4d24-9c1e-953306963be2" name="Changes" comment="">
++    <list default="true" id="98b7a208-14d3-4d24-9c1e-953306963be2" name="Changes" comment="chuj">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/IStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IStack.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/ONP.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ONP.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/Stack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Stack.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -39,7 +39,7 @@
+     "RunOnceActivity.OpenProjectViewOnStart": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "WebServerToolWindowFactoryState": "false",
+-    "last_opened_file_path": "C:/Users/Mikołaj/IdeaProjects/AISD/Laby/Lista6/Lista6",
++    "last_opened_file_path": "C:/Users/Mikołaj/IdeaProjects/AISD/Laby/Lista5",
+     "node.js.detected.package.eslint": "true",
+     "node.js.detected.package.tslint": "true",
+     "node.js.selected.package.eslint": "(autodetect)",
+@@ -57,6 +57,21 @@
+       <updated>1683453169070</updated>
+       <workItem from="1683453170288" duration="1002000" />
+     </task>
++    <task id="LOCAL-00001" summary="chuj">
++      <created>1683484202938</created>
++      <option name="number" value="00001" />
++      <option name="presentableId" value="LOCAL-00001" />
++      <option name="project" value="LOCAL" />
++      <updated>1683484202938</updated>
++    </task>
++    <task id="LOCAL-00002" summary="chuj">
++      <created>1683484271341</created>
++      <option name="number" value="00002" />
++      <option name="presentableId" value="LOCAL-00002" />
++      <option name="project" value="LOCAL" />
++      <updated>1683484271341</updated>
++    </task>
++    <option name="localTasksCounter" value="3" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -73,4 +88,8 @@
+       </map>
+     </option>
+   </component>
++  <component name="VcsManagerConfiguration">
++    <MESSAGE value="chuj" />
++    <option name="LAST_COMMIT_MESSAGE" value="chuj" />
++  </component>
+ </project>
+\ No newline at end of file
