@@ -36,4 +36,11 @@ public class ObservableKoniec implements Subject{
         measurementsChanged();
     }
 
+    public GraphData getData() {
+        return data;
+    }
+
+    public void setData(GraphData data) {
+        this.data = data;
+    }
 }

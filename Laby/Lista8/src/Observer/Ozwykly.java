@@ -7,8 +7,8 @@ import Observable.*;
 
 import java.util.ArrayList;
 
-public class Ozwykly extends Model implements  Observer, Subject {
-    ArrayList<Observer> ObserverList = new ArrayList<Observer>();
+public class Ozwykly extends Model implements  Observer {
+
     private int wezly;
     private GraphData data;
     private  Subject sub;
@@ -20,22 +20,7 @@ public class Ozwykly extends Model implements  Observer, Subject {
     }
 
 
-    @Override
-    public void registerObserver(Observer observer) {
-        ObserverList.add(observer);
-    }
 
-    @Override
-    public void removeObserver(Observer observer) {
-        ObserverList.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers() {
-        for(int i = 0; i<ObserverList.size(); i++) {
-            ObserverList.get(i).update(this,"chuj");
-        }
-    }
     @Override
     public void update(Subject sub, String napis) {
         if (sub instanceof ObservableWezly){

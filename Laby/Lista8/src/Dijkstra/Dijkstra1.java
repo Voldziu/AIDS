@@ -1,11 +1,81 @@
 package Dijkstra;
 
-import Data.GraphData;
-import Data.Vertex;
+import Data.*;
+
+import javax.sound.midi.Soundbank;
+import java.util.*;
 
 public class Dijkstra1 implements  StrategyDijkstra{
+
     @Override
-    public GraphData DoDijkstra(Vertex start, Vertex koniec) {
+    public GraphData DoDijkstra(String start, String koniec, GraphData data) {
+        Vertex Vstart = data.getVertecies().get(Character.getNumericValue(start.charAt(0))-65);
+        Vertex Vkoniec = data.getVertecies().get(Character.getNumericValue(koniec.charAt(0))-65);
+        HashSet<Vertex> resolved= new HashSet<>();
+        HashMap<Vertex,Integer> distances = new HashMap<>();
+        HashMap<Vertex,Vertex> previous= new HashMap<>();
+
+        for (Vertex vertex: data.getVertecies()){
+            distances.put(vertex,Integer.MAX_VALUE);
+            previous.put(vertex,null);
+        }
+        BinaryHeap<HeapNode> binaryHeap = new BinaryHeap<>(new Comparator<HeapNode>() {
+            @Override
+            public int compare(HeapNode o1, HeapNode o2) {
+                return o1.compareTo(o2);
+            }
+        });
+        binaryHeap.enqueue(new HeapNode(Vstart,0));
+        distances.put(Vstart,0);
+        resolved.add(Vstart);
+
+        while(!binaryHeap.isEmpty()){
+            HeapNode Node = binaryHeap.dequeue();
+            Vertex vertex = Node.getDestination();
+            int waga = Node.getWaga();
+            resolved.add(vertex);
+
+            for(Data.Node node: data.getMatrix().get(vertex)){
+                Vertex destination = node.getDestination();
+                int weight = node.getWaga();
+                int newWeight = waga+weight;
+                if(!resolved.contains(destination) && newWeight<distances.get(destination)){
+                    distances.put(destination,newWeight);
+                    previous.put(destination,vertex);
+                    binaryHeap.enqueue(new HeapNode(destination,newWeight));
+                }
+
+            }
+
+        }
+
+
+        ArrayList<Vertex> path = new ArrayList<>();
+        Vertex current = Vkoniec;
+        while(current!=null){
+            path.add(current);
+            current = previous.get(current);
+        }
+        Collections.reverse(path);
+
+        for(Vertex vertex: path){
+            System.out.print(vertex.getLabel()+" ");
+        }
+        System.out.println();
+
+        for (int i = 0; i <path.size()-1 ; i++) {
+            Vertex source = path.get(i);
+            Vertex dest = path.get(i+1);
+            // ZROBIC KOLOROWANIE
+
+        }
+
+
+
+
+
+
+
         return null;
     }
 }

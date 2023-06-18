@@ -5,6 +5,7 @@ import Observable.ObservableWezly;
 import View.View1;
 
 public class ControlerWezly {
+    private static int mode;
     private static ObservableWezly obs;
     public static void setObserbale(ObservableWezly o) {
         obs = o;
@@ -32,6 +33,11 @@ public class ControlerWezly {
         View1.setData(data);
     }
 
+    public static int getWezly() {
+        return wezly;
+    }
 
-
+    public static void setWezly(int wezly) {
+        ControlerWezly.wezly = wezly;
+    }
 }
