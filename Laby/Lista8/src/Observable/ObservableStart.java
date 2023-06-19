@@ -21,7 +21,7 @@ public class ObservableStart implements Subject{
     @Override
     public void notifyObservers() {
         for(int i = 0; i<ObserverList.size(); i++) {
-            ObserverList.get(i).update(this,"start");
+            ObserverList.get(i).update(this,start);
         }
     }
     public void measurementsChanged() {

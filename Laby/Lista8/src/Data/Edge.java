@@ -1,5 +1,7 @@
 package Data;
 
+import java.security.spec.RSAOtherPrimeInfo;
+
 public class Edge {
     private Vertex source;
     private Vertex target;
@@ -40,11 +42,25 @@ public class Edge {
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Edge){
-            return ((Edge) obj).getSource() == this.getSource() && (((Edge) obj).getTarget() == this.getTarget() || ((Edge) obj).getSource() == this.getTarget() && (((Edge) obj).getTarget() == this.getSource()));
+
+            boolean returnvalue= ((Edge) obj).getSource() == this.getSource() && (((Edge) obj).getTarget() == this.getTarget());
+            if(returnvalue){
+                System.out.println("true");
+
+            } else{
+                System.out.println("false");
+            }
+            return returnvalue;
 
         } else{
+
             return false;
         }
 
+    }
+
+    @Override
+    public String toString() {
+        return source.getLabel()+target.getLabel()+String.valueOf(waga);
     }
 }

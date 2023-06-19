@@ -7,7 +7,7 @@ import View.View1;
 public class ControlerWezly {
     private static int mode;
     private static ObservableWezly obs;
-    public static void setObserbale(ObservableWezly o) {
+    public static void setObservable(ObservableWezly o) {
         obs = o;
     }
     private static int wezly;
@@ -19,14 +19,16 @@ public class ControlerWezly {
 
     public static void setWezlyFromView(int wezly2) {
 
-        if (wezly > 0 && wezly<11) {
+        if (wezly2 > 0 && wezly2<11) {
 
             wezly = wezly2;
 
             putDataToModel();
         }
-        else
+        else{
             System.out.println("mordo zle ");
+        }
+
     }
 
     public static void dataToView(GraphData data){
@@ -39,5 +41,13 @@ public class ControlerWezly {
 
     public static void setWezly(int wezly) {
         ControlerWezly.wezly = wezly;
+    }
+
+    public static int getMode() {
+        return mode;
+    }
+
+    public static void setMode(int mode) {
+        ControlerWezly.mode = mode;
     }
 }

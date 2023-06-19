@@ -23,7 +23,7 @@ public class ObservableKoniec implements Subject{
     @Override
     public void notifyObservers() {
         for(int i = 0; i<ObserverList.size(); i++) {
-            ObserverList.get(i).update(this,"koniec");
+            ObserverList.get(i).update(this,koniec);
         }
     }
     public void measurementsChanged() {

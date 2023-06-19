@@ -1,5 +1,6 @@
 package View;
 
+import Controler.ControlerStartKoniec;
 import Controler.ControlerWezly;
 import Data.GraphData;
 
@@ -9,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class View1 {
-    private final int WINDOW_WIDTH = 2000;
+    private final int WINDOW_WIDTH = 3000;
     private final int WINDOW_HEIGHT = 3000;
     private static JFrame frame;
     private JPanel north;
@@ -64,11 +65,13 @@ public class View1 {
 
         NORTH.add(BorderLayout.NORTH,north);
         NORTH.add(BorderLayout.SOUTH,north2);
+        NORTH.setPreferredSize(new Dimension(1000,200));
         northprzyciski.setLayout(new GridLayout(3,1));
         north.setLayout(new GridLayout(1,3));
         north.add(podajwierzcholki);
         north.add(wierzcholki);
         north.add(northprzyciski);
+        centre.setPreferredSize(new Dimension(1000,1000));
         northprzyciski.add(zwyklygraph);
         northprzyciski.add(gg);
         northprzyciski.add(rng);
@@ -80,10 +83,17 @@ public class View1 {
         north2.add(zatwierdzDijkstra);
         north2.add(podajkoniec);
         north2.add(koniec);
+        zwyklygraph.addActionListener(new Zwykly());
+        gg.addActionListener(new GG());
+        rng.addActionListener(new RNG());
+        zatwierdzDijkstra.addActionListener(new ZatwierzDijkstra());
+
+
+
 
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setSize(WINDOW_WIDTH,WINDOW_HEIGHT);
         frame.setLocationRelativeTo(null);
         frame.pack();
@@ -98,11 +108,41 @@ public class View1 {
         @Override
         public void actionPerformed(ActionEvent e) {
             ControlerWezly.setWezlyFromView(Integer.parseInt(wierzcholki.getText()));
+            System.out.println(Integer.parseInt(wierzcholki.getText()));
+            north2.setVisible(true);
 
         }
     }
+    class Zwykly implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ControlerWezly.setMode(0);
+            new ZatwierdzWierzcholki().actionPerformed(e);
+
+        }
+    }
+    class GG implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ControlerWezly.setMode(1);
+            new ZatwierdzWierzcholki().actionPerformed(e);
+
+        }
+    }
+    class RNG implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ControlerWezly.setMode(2);
+            new ZatwierdzWierzcholki().actionPerformed(e);
+
+        }
+    }
+
     class ZatwierzDijkstra implements ActionListener{
         public void actionPerformed(ActionEvent e) {
+            System.out.println(start.getText());
+            System.out.println(koniec.getText());
+            ControlerStartKoniec.setStartKoniecFromView(start.getText(),koniec.getText());
 
         }
     }

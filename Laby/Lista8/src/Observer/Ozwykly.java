@@ -25,7 +25,9 @@ public class Ozwykly extends Model implements  Observer {
     public void update(Subject sub, String napis) {
         if (sub instanceof ObservableWezly){
             wezly= ((ObservableWezly) sub).getWezly();
-            ControlerWezly.dataToView(strategyModel.DoModel(wezly,xdim,ydim));
+            if(ControlerWezly.getMode()==0){
+                ControlerWezly.dataToView(strategyModel.DoModel(wezly,xdim,ydim));
+            }
         }
 
 

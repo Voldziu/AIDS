@@ -38,8 +38,11 @@ public class GraphPanel extends JPanel {
                     g.setColor(Color.BLACK);
                 }
                 g.drawLine(x1, y1, x2, y2);
-                g.setColor(Color.BLACK);
+                g.setColor(Color.ORANGE);
+                Font font = new Font("Arial",Font.BOLD,24);
+                g.setFont(font);
                 g.drawString(String.valueOf(edge.getWaga()),(x1+x2)/2,(y1+y2)/2);
+
             }
         }
 

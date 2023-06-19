@@ -9,11 +9,14 @@ import Observable.Subject;
 public class Ostartkoniec extends Dijkstra implements Observer {
     private String start;
     private String koniec;
-    private Subject sub;
+    private Subject Sstart;
+    private Subject Skoniec;
 
-    public Ostartkoniec(Subject sub) {
-        this.sub = sub;
-        this.sub.registerObserver(this);
+    public Ostartkoniec(Subject start,Subject koniec) {
+        this.Sstart = start;
+        this.Sstart.registerObserver(this);
+        this.Skoniec = koniec;
+        this.Skoniec.registerObserver(this);
         strategyDijkstra = new Dijkstra1();
 
     }

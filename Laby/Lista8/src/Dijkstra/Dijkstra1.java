@@ -9,8 +9,11 @@ public class Dijkstra1 implements  StrategyDijkstra{
 
     @Override
     public GraphData DoDijkstra(String start, String koniec, GraphData data) {
-        Vertex Vstart = data.getVertecies().get(Character.getNumericValue(start.charAt(0))-65);
-        Vertex Vkoniec = data.getVertecies().get(Character.getNumericValue(koniec.charAt(0))-65);
+
+
+
+        Vertex Vstart = data.getVertecies().get((int)(start.charAt(0))-65);
+        Vertex Vkoniec = data.getVertecies().get((int)(koniec.charAt(0))-65);
         HashSet<Vertex> resolved= new HashSet<>();
         HashMap<Vertex,Integer> distances = new HashMap<>();
         HashMap<Vertex,Vertex> previous= new HashMap<>();
@@ -63,10 +66,21 @@ public class Dijkstra1 implements  StrategyDijkstra{
         }
         System.out.println();
 
+        for(Edge edge : data.getEdges()){
+            edge.setColor(false);
+        }
+
         for (int i = 0; i <path.size()-1 ; i++) {
             Vertex source = path.get(i);
             Vertex dest = path.get(i+1);
-            // ZROBIC KOLOROWANIE
+            Edge newEdge = new Edge(source,dest,0);
+            Edge reversedEdge = new Edge(dest,source,0);
+            for( Edge edge: data.getEdges()){
+                if(edge.equals(newEdge) || edge.equals(reversedEdge)){
+                    edge.setColor(true);
+                    break;
+                }
+            }
 
         }
 
@@ -76,6 +90,6 @@ public class Dijkstra1 implements  StrategyDijkstra{
 
 
 
-        return null;
+        return data;
     }
 }

@@ -14,7 +14,7 @@ public class Zwykly implements StrategyModel {
     @Override
     public GraphData DoModel(int wezly,int xdim, int ydim) {
         Random random = new Random();
-        int ilesasiadow = Math.max(wezly,3);
+        int ilesasiadow = Math.min(wezly,2);
         ArrayList<Vertex> vertices= new ArrayList<>();
         ArrayList<Edge> edges = new ArrayList<>();
         HashMap<Vertex,ArrayList<Node>> matrix = new HashMap<>();
@@ -22,9 +22,11 @@ public class Zwykly implements StrategyModel {
         int radius = Math.min(xdim,ydim)/2;
 
         for (int i = 0; i <wezly ; i++) {
-            int x = (int) (radius * Math.cos(2* Math.PI *i/wezly))+xdim/2;
-            int y = (int) (radius * Math.sin(2 * Math.PI *i/wezly))+ydim/2;
-            vertices.add(new Vertex(String.valueOf((char) litera+i),x,y));
+            int x = (int) (radius * Math.cos(2* Math.PI *i/wezly))+xdim/2+50;
+            int y = (int) (radius * Math.sin(2 * Math.PI *i/wezly))+ydim/2+50;
+            char car = (char) (litera+i);
+
+            vertices.add(new Vertex(String.valueOf(car),x,y));
 
         }
         for (int i = 0; i <wezly ; i++) {
@@ -34,11 +36,13 @@ public class Zwykly implements StrategyModel {
             for (int j = 0; j <ilesasiadow ; j++) {
                 int k = random.nextInt(wezly);
                 Vertex sasiad = vertices.get(k);
-                if(!sasiedzi.contains(sasiad) && k!=i && !edges.contains(new Edge(source,sasiad,0)) ){
+                System.out.println("dupa");
+                if(!sasiedzi.contains(sasiad) && k!=i && !edges.contains(new Edge(source,sasiad,0)) && !edges.contains(new Edge(sasiad,source,0))){
                     sasiedzi.add(sasiad);
                     edges.add(new Edge(source,sasiad, random.nextInt(25)));
 
                 }
+                System.out.println(edges);
             }
         }
         for (int i = 0; i <wezly ; i++) {

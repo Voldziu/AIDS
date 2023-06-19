@@ -18,9 +18,9 @@ public class GG implements StrategyModel {
         HashMap<Vertex,ArrayList<Node>> matrix = new HashMap<>();
         int litera =65;
         for (int i = 0; i <wezly ; i++) {
-            int x = random.nextInt(xdim);
-            int y = random.nextInt(ydim);
-            vertices.add(new Vertex(String.valueOf((char) litera+i),x,y));
+            int x = random.nextInt(xdim)+50;
+            int y = random.nextInt(ydim)+50;
+            vertices.add(new Vertex(String.valueOf((char) (litera+i)),x,y));
         }
         for (int i = 0; i <wezly ; i++) {
             Vertex a = vertices.get(i);
