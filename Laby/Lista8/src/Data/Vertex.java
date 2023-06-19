@@ -4,6 +4,7 @@ public class Vertex {
     private String label;
     private int x;
     private int y;
+    private  boolean visited = false;
 
 
     public Vertex(String label, int x, int y) {
@@ -24,5 +25,11 @@ public class Vertex {
         return y;
     }
 
+    public boolean isVisited() {
+        return visited;
+    }
 
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
 }

@@ -19,7 +19,7 @@ public class ControlerWezly {
 
     public static void setWezlyFromView(int wezly2) {
 
-        if (wezly2 > 0 && wezly2<11) {
+        if (wezly2 > 0) {
 
             wezly = wezly2;
 

@@ -43,14 +43,7 @@ public class Edge {
     public boolean equals(Object obj) {
         if(obj instanceof Edge){
 
-            boolean returnvalue= ((Edge) obj).getSource() == this.getSource() && (((Edge) obj).getTarget() == this.getTarget());
-            if(returnvalue){
-                System.out.println("true");
-
-            } else{
-                System.out.println("false");
-            }
-            return returnvalue;
+            return ((Edge) obj).getSource() == this.getSource() && (((Edge) obj).getTarget() == this.getTarget()) ||((Edge) obj).getSource() == this.getTarget() && (((Edge) obj).getTarget() == this.getSource());
 
         } else{
 

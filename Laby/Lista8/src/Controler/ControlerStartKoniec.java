@@ -25,7 +25,7 @@ public class ControlerStartKoniec {
         putDataToModel();
     }
 
-    public static void dataToView(GraphData data){
+    public static void dataToView(GraphData data)  {
         View1.setData(data);
 
     }

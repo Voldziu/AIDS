@@ -1,5 +1,6 @@
 package View;
 
+import Algs.Cyklomierz;
 import Controler.ControlerStartKoniec;
 import Controler.ControlerWezly;
 import Data.GraphData;
@@ -16,6 +17,7 @@ public class View1 {
     private JPanel north;
     private JPanel north2;
     private JPanel NORTH;
+    private static JPanel east;
     private JPanel startkoniec;
     private  JPanel northprzyciski;
     private static  GraphPanel centre;
@@ -26,6 +28,7 @@ public class View1 {
     private JButton gg;
     private JButton rng;
     private JButton zatwierdzDijkstra;
+    private JButton cykle;
     private JTextField wierzcholki;
     private JTextField start;
     private JTextField koniec;
@@ -43,6 +46,8 @@ public class View1 {
         koniec = new JTextField(15);
         north = new JPanel();
         north2 = new JPanel();
+        east = new JPanel();
+
         northprzyciski = new JPanel();
 
         north2.setVisible(false);
@@ -52,6 +57,7 @@ public class View1 {
         gg = new JButton("Stworz Gabriels Graph");
         rng = new JButton("Stworz RNG");
         zatwierdzDijkstra = new JButton("Wykonaj algortym Dijkstry");
+        cykle = new JButton("Wypisz wszystkie cykle");
 
 
 
@@ -61,6 +67,7 @@ public class View1 {
     public void GUI_Create(){
         frame.getContentPane().add(BorderLayout.CENTER,centre);
         frame.getContentPane().add(BorderLayout.NORTH,NORTH);
+        frame.getContentPane().add(BorderLayout.EAST,east);
 
 
         NORTH.add(BorderLayout.NORTH,north);
@@ -83,9 +90,11 @@ public class View1 {
         north2.add(zatwierdzDijkstra);
         north2.add(podajkoniec);
         north2.add(koniec);
+        north2.add(cykle);
         zwyklygraph.addActionListener(new Zwykly());
         gg.addActionListener(new GG());
         rng.addActionListener(new RNG());
+        cykle.addActionListener(new ZatwierzCykle());
         zatwierdzDijkstra.addActionListener(new ZatwierzDijkstra());
 
 
@@ -146,13 +155,33 @@ public class View1 {
 
         }
     }
+    static class ZatwierzCykle implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+            setCykle(Cyklomierz.LiczCykle(getData()));
 
-    public static  void setData(GraphData data){
+        }
+    }
+
+
+
+    public static  void setData(GraphData data) {
         centre.setData(data);
+
+
         frame.repaint();
     }
     public static GraphData getData(){
         return centre.getData();
+    }
+
+    public static void setCykle(JScrollPane sp){
+        east.removeAll();
+        east.add(sp);
+        east.revalidate();
+        east.repaint();
+        System.out.println("dupalollolol");
+
+
     }
 
 }
