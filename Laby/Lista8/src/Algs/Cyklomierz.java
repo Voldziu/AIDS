@@ -14,8 +14,9 @@ import java.util.List;
 public class Cyklomierz {
 
 
-    public static  JScrollPane LiczCykle(GraphData data){
+    public static  ArrayList LiczCykle(GraphData data){
         System.out.println("chuj");
+        ArrayList returnlist = new ArrayList();
         HashMap<LinkedHashSet<Vertex>,Integer> cycles = new HashMap<>();
 
 
@@ -26,8 +27,12 @@ public class Cyklomierz {
             dfs(data,vertex,vertex,visited,currentCycle,cycles);
 
         }
+        System.out.println("dupa: "+cycles.size());
 
-        return pogrupuj(cycles,data);
+        returnlist.add(pogrupuj(cycles,data));
+        returnlist.add(cycles.size());
+
+        return returnlist;
 
 
 
@@ -102,6 +107,7 @@ public class Cyklomierz {
             sb = new StringBuilder();
             Map.Entry<LinkedHashSet<Vertex>,Integer> entry = new ArrayList<>(sortedMap.entrySet()).get(i);
             ArrayList<Vertex> lista = new ArrayList<>(entry.getKey());
+            sb.append(i+1).append(".").append(" ");
             for (Vertex vertex: lista){
                 sb.append(vertex.getLabel()).append(" ");
 
@@ -112,6 +118,7 @@ public class Cyklomierz {
         }
 
         JTable tablica = new JTable(dane,columns);
+
         JScrollPane sp = new JScrollPane(tablica);
         return sp;
 

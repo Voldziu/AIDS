@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class View1 {
     private final int WINDOW_WIDTH = 3000;
@@ -17,6 +18,8 @@ public class View1 {
     private JPanel north;
     private JPanel north2;
     private JPanel NORTH;
+    private static  JTextField ilecykli;
+
     private static JPanel east;
     private JPanel startkoniec;
     private  JPanel northprzyciski;
@@ -42,11 +45,14 @@ public class View1 {
         podajstart = new JLabel("Podaj label wierzchołka startowego");
         podajkoniec = new JLabel("Podaj label wierzchołka końcowego");
         wierzcholki = new JTextField(15);
+        ilecykli = new JTextField(15);
+        ilecykli.setPreferredSize(new Dimension(100,25));
         start = new JTextField(15);
         koniec = new JTextField(15);
         north = new JPanel();
         north2 = new JPanel();
         east = new JPanel();
+
 
         northprzyciski = new JPanel();
 
@@ -79,6 +85,7 @@ public class View1 {
         north.add(wierzcholki);
         north.add(northprzyciski);
         centre.setPreferredSize(new Dimension(1000,1000));
+        east.setPreferredSize(new Dimension(400,1000));
         northprzyciski.add(zwyklygraph);
         northprzyciski.add(gg);
         northprzyciski.add(rng);
@@ -157,7 +164,7 @@ public class View1 {
     }
     static class ZatwierzCykle implements ActionListener{
         public void actionPerformed(ActionEvent e) {
-            setCykle(Cyklomierz.LiczCykle(getData()));
+            setCykle( Cyklomierz.LiczCykle(getData()));
 
         }
     }
@@ -174,9 +181,15 @@ public class View1 {
         return centre.getData();
     }
 
-    public static void setCykle(JScrollPane sp){
+    public static void setCykle(ArrayList list){
+        JScrollPane sp = (JScrollPane) list.get(0);
+        int liczbacykli = (int) list.get(1);
         east.removeAll();
-        east.add(sp);
+        east.setLayout(new BorderLayout());
+        east.add(BorderLayout.NORTH,ilecykli);
+        east.add(BorderLayout.CENTER,sp);
+        ilecykli.setText("Liczba cykli: "+String.valueOf(liczbacykli));
+
         east.revalidate();
         east.repaint();
         System.out.println("dupalollolol");
