@@ -28,14 +28,14 @@ public class GG implements StrategyModel {
                 Vertex b = vertices.get(j);
                 double middlex = ((double) a.getX()+b.getX())/2;
                 double middley = ((double) a.getY()+b.getY())/2;
-                double radius2 = Math.pow((Math.pow(a.getX()-middlex,2)+Math.pow(a.getY()-middley,2)),2);
+                double radius2 = (Math.pow(a.getX()-middlex,2)+Math.pow(a.getY()-middley,2));
 
                 int k=0;
                 boolean notfound =true;
                 while(k<wezly && notfound){
                     if(k!=i && k!=j){
                         Vertex c = vertices.get(k);
-                        double distance2 = Math.pow((Math.pow(c.getX()-middlex,2)+Math.pow(c.getY()-middley,2)),2);
+                        double distance2 =Math.pow(c.getX()-middlex,2)+Math.pow(c.getY()-middley,2);
                         if(distance2<=radius2){
                             notfound=false;
                         }

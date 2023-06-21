@@ -29,15 +29,15 @@ public class RNG implements StrategyModel {
             for (int j = i+1; j <wezly ; j++) {
                 Vertex b = vertices.get(j);
 
-                double radius2 = Math.pow((Math.pow(a.getX()-b.getX(),2)+Math.pow(a.getY()-b.getY(),2)),2);
+                double radius2 = (Math.pow(a.getX()-b.getX(),2)+Math.pow(a.getY()-b.getY(),2));
 
                 int k=0;
                 boolean notfound =true;
                 while(k<wezly && notfound){
                     if(k!=i && k!=j){
                         Vertex c = vertices.get(k);
-                        double ac = Math.pow((Math.pow(c.getX()-a.getX(),2)+Math.pow(c.getY()-a.getY(),2)),2);
-                        double bc = Math.pow((Math.pow(c.getX()-b.getX(),2)+Math.pow(c.getY()-b.getY(),2)),2);
+                        double ac = (Math.pow(c.getX()-a.getX(),2)+Math.pow(c.getY()-a.getY(),2));
+                        double bc = (Math.pow(c.getX()-b.getX(),2)+Math.pow(c.getY()-b.getY(),2));
                         double max = Math.max(ac,bc);
 
                         if(max<=radius2){
@@ -50,6 +50,8 @@ public class RNG implements StrategyModel {
                 }
                 if(notfound){
                     edges.add(new Edge(a,b,(int)Math.sqrt(radius2)/2));
+                    System.out.println(radius2);
+                    System.out.println(Math.sqrt(radius2));
                 }
 
 

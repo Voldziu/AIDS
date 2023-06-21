@@ -15,7 +15,7 @@ public class Cyklomierz {
 
 
     public static  ArrayList LiczCykle(GraphData data){
-        System.out.println("chuj");
+
         ArrayList returnlist = new ArrayList();
         HashMap<LinkedHashSet<Vertex>,Integer> cycles = new HashMap<>();
 
@@ -27,7 +27,7 @@ public class Cyklomierz {
             dfs(data,vertex,vertex,visited,currentCycle,cycles);
 
         }
-        System.out.println("dupa: "+cycles.size());
+       
 
         returnlist.add(pogrupuj(cycles,data));
         returnlist.add(cycles.size());
